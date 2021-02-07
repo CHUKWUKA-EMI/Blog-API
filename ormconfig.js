@@ -1,6 +1,6 @@
 module.exports = {
   type: 'postgres',
-  url: process.env.DB_URL,
+  url: process.env.DATABASE_URL,
   autoLoadEntities: true,
   migrationsRun: true,
   synchronize: true,
