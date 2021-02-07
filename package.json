@@ -2,6 +2,10 @@
   "name": "blog-api",
   "version": "0.0.1",
   "description": "",
+  "engines": {
+    "node": "12.8.3",
+    "yarn": "1.22.4"
+  },
   "author": "Chukwuka Emi",
   "private": true,
   "license": "MIT",
