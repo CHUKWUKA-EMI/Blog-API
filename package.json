@@ -2,9 +2,15 @@
   "name": "blog-api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Chukwuka Emi",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "keywords": [
+    "blog",
+    "social",
+    "nestjs",
+    "technology"
+  ],
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
