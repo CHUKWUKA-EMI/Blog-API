@@ -20,7 +20,7 @@ export class UserService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async sendEmail(from, to, subject, html) {
+  async sendEmail(from: string, to: string, subject: string, html: string) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     try {
       return await sgMail.send({ to, subject, from, html });
@@ -38,7 +38,7 @@ export class UserService {
       email: createUserDto.email,
     });
     if (existingUser) {
-      throw new HttpException(
+      new HttpException(
         'User with this email already exist',
         HttpStatus.BAD_REQUEST,
       );
@@ -52,7 +52,7 @@ export class UserService {
       const newUser = await this.usersRepository.save(user);
       const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' });
       const url = `${process.env.BACKEND_URL}/user/activate-user/${token}`;
-      console.log('backend url', url);
+
       const message = `<html><body><h3> Hi ${createUserDto.firstName} ${createUserDto.lastName} </h3>
     <p>Thank you for registering on this platform</p>
     <hr/>

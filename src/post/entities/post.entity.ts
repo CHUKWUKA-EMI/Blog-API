@@ -19,8 +19,10 @@ export class Post {
   @IsString()
   title: string;
 
+  @Column()
+  slug: string;
+
   @Column('text')
-  @IsString()
   content: string;
 
   @Column('text', { nullable: true })

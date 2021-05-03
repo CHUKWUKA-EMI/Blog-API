@@ -25,7 +25,6 @@ export class PostController {
     @Request() req,
     @Body(new ValidationPipe()) createPostDto: CreatePostDto,
   ) {
-    console.log('request header', req.user);
     return this.postService.create(req.user.userId, createPostDto);
   }
 
@@ -34,9 +33,14 @@ export class PostController {
     return this.postService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.postService.findOne(+id);
+  // }
+
+  @Get(':slug')
+  findOne(@Param('slug') slug: string) {
+    return this.postService.findBySlug(slug);
   }
 
   @UseGuards(AuthGuard('jwt'))

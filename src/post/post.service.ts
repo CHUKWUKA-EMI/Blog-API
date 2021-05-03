@@ -5,6 +5,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
 import { User } from '../user/entities/user.entity';
+const slugify = require('slugify');
 
 @Injectable()
 export class PostService {
@@ -20,13 +21,14 @@ export class PostService {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     try {
       post.title = createPostDto.title;
+      post.slug = slugify(createPostDto.title, { lower: true });
       post.content = createPostDto.content;
       post.image = post.image ? createPostDto.image : null;
       post.user = user;
       const newPost = await this.postRepository.save(post);
       return { ...newPost, user: newPost.user };
     } catch (error) {
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -46,6 +48,17 @@ export class PostService {
     }
   }
 
+  async findBySlug(slug: string): Promise<Post> {
+    try {
+      return await this.postRepository.findOneOrFail({
+        where: { slug: slug },
+        relations: ['user', 'comments', 'likes'],
+      });
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async update(id: number, updatePostDto: UpdatePostDto): Promise<Post> {
     try {
       const post = await this.postRepository.findOne(id);
@@ -57,6 +70,7 @@ export class PostService {
       }
 
       post.title = updatePostDto.title;
+      post.slug = slugify(updatePostDto.title, { lower: true });
       post.content = updatePostDto.content;
       post.image = updatePostDto.image;
 
