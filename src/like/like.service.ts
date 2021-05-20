@@ -26,6 +26,7 @@ export class LikeService {
         where: { id: createLikeDto.postId },
       });
       like.value = createLikeDto.value;
+      like.likerId = user.id;
       like.user = user;
       like.post = post;
       const newLike = await this.likeRepo.save(like);

@@ -30,6 +30,9 @@ export class CommentService {
         where: { id: createCommentDto.postId },
       });
       comment.content = createCommentDto.content;
+      comment.userName = `${user.firstName} ${user.lastName}`;
+      comment.userAvatar = user.imageUrl;
+      comment.commenterId = user.id;
       comment.user = user;
       comment.post = post;
       const newComment = await this.commentsRepo.save(comment);

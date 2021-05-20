@@ -18,6 +18,15 @@ export class Comment {
   @IsString()
   content: string;
 
+  @Column()
+  userName: string;
+
+  @Column({ nullable: true })
+  userAvatar: string;
+
+  @Column()
+  commenterId: number;
+
   @ManyToOne(
     type => User,
     user => user.comments,

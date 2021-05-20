@@ -8,15 +8,18 @@ import {
   Delete,
   ValidationPipe,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { LikeService } from './like.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('like')
 export class LikeController {
   constructor(private readonly likeService: LikeService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   create(
     @Request() req,

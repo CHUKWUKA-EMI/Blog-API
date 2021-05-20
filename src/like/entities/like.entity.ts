@@ -12,6 +12,9 @@ export class Like {
   @IsBoolean()
   value: boolean;
 
+  @Column()
+  likerId: number;
+
   @ManyToOne(
     type => User,
     user => user.likes,

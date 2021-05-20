@@ -23,7 +23,7 @@ export class PostService {
       post.title = createPostDto.title;
       post.slug = slugify(createPostDto.title, { lower: true });
       post.content = createPostDto.content;
-      post.image = post.image ? createPostDto.image : null;
+      post.image = createPostDto.image ? createPostDto.image : null;
       post.user = user;
       const newPost = await this.postRepository.save(post);
       return { ...newPost, user: newPost.user };

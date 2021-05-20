@@ -25,7 +25,7 @@ export class Post {
   @Column('text')
   content: string;
 
-  @Column('text', { nullable: true })
+  @Column({ nullable: true })
   image: string;
 
   @ManyToOne(
